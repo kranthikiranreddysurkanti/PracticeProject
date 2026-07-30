@@ -1,7 +1,7 @@
 package com.kranthi.practiceproject.models;
 
 public class Product {
-    private int id;
+    private Long id;
     private String title;
     private String description;
     private double price;
@@ -11,7 +11,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(int id, String title, String description, double price, String imageUrl, Category category) {
+    public Product(long id, String title, String description, double price, String imageUrl, Category category) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -20,11 +20,11 @@ public class Product {
         this.category = category;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
