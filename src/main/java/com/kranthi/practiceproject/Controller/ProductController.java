@@ -1,19 +1,28 @@
 package com.kranthi.practiceproject.Controller;
 
 import com.kranthi.practiceproject.models.Product;
+import com.kranthi.practiceproject.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ProductController {
+
+    private ProductService productService;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
+
     @PostMapping("/products")
     public void createProduct(Product p){
 
     }
-    @PutMapping("/products/{id}")
+    @GetMapping("/products/{id}")
     public Product getProduct(@PathVariable("id") Long id){
+        productService.getSingleProduct(id);
         return null;
     }
-    @GetMapping("/products")
+    @PutMapping("/products")
     public void updateProduct(Product p){
 
     }
