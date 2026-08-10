@@ -20,7 +20,7 @@ public class Product {
         this.category = category;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
