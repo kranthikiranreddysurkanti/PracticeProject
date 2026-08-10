@@ -14,13 +14,16 @@ public class ProductController {
 
 
     @PostMapping("/products")
-    public void createProduct(Product p){
-
+    public Product createProduct(@RequestBody Product product){
+        Product p = productService.createProduct(product.getId(), product.getTitle(), product.getDescription(), product.getPrice(),product.getImageUrl(), product.getCategory().getName());
+        return p;
     }
     @GetMapping("/products/{id}")
     public Product getProduct(@PathVariable("id") Long id){
-        productService.getSingleProduct(id);
-        return null;
+        System.out.println("starting the api");
+        Product p = productService.getSingleProduct(id);
+        System.out.println("ending the api");
+        return p;
     }
     @PutMapping("/products")
     public void updateProduct(Product p){
