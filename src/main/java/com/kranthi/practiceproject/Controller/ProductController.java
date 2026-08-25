@@ -1,5 +1,7 @@
 package com.kranthi.practiceproject.Controller;
 
+import com.kranthi.practiceproject.DTO.ErrorDTO;
+import com.kranthi.practiceproject.Exceptions.ProductNotFoundException;
 import com.kranthi.practiceproject.models.Product;
 import com.kranthi.practiceproject.service.ProductService;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +21,7 @@ public class ProductController {
         return p;
     }
     @GetMapping("/products/{id}")
-    public Product getProduct(@PathVariable("id") Long id){
+    public Product getProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
         System.out.println("starting the api");
         Product p = productService.getSingleProduct(id);
         System.out.println("ending the api");
@@ -32,5 +34,11 @@ public class ProductController {
     @DeleteMapping("/products")
     public void deleteProduct(Long id){
 
+    }
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ErrorDTO handleProductNotFoundException(Exception e){
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setMessage(e.getMessage());
+        return errorDTO;
     }
 }

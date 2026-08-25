@@ -1,6 +1,7 @@
 package com.kranthi.practiceproject.service;
 
 import com.kranthi.practiceproject.DTO.FakeStoreProductDto;
+import com.kranthi.practiceproject.Exceptions.ProductNotFoundException;
 import com.kranthi.practiceproject.models.Product;
 import org.springframework.boot.autoconfigure.context.MessageSourceProperties;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,13 @@ public class fakeStoreProductService implements ProductService{
         this.restTemplate = restTemplate;
     }
 
-    public Product getSingleProduct(long id) {
+    public Product getSingleProduct(long id) throws ProductNotFoundException {
         System.out.println("inside getting the single product method API");
         FakeStoreProductDto fakeStoreProductDto =
                 restTemplate.getForObject("https://fakestoreapi.com/products/" + id, FakeStoreProductDto.class);
+        if(fakeStoreProductDto == null){
+            throw new ProductNotFoundException("product is not available in fakestore");
+        }
         return fakeStoreProductDto.getProduct();
     }
 
