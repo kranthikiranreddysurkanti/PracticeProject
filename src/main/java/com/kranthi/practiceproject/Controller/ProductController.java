@@ -4,6 +4,8 @@ import com.kranthi.practiceproject.DTO.ErrorDTO;
 import com.kranthi.practiceproject.Exceptions.ProductNotFoundException;
 import com.kranthi.practiceproject.models.Product;
 import com.kranthi.practiceproject.service.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,11 +23,14 @@ public class ProductController {
         return p;
     }
     @GetMapping("/products/{id}")
-    public Product getProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
+    public ResponseEntity<Product> getProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
         System.out.println("starting the api");
         Product p = productService.getSingleProduct(id);
         System.out.println("ending the api");
-        return p;
+        ResponseEntity<Product> response = new ResponseEntity<>(
+                p, HttpStatus.OK
+        );
+        return response;
     }
     @PutMapping("/products")
     public void updateProduct(Product p){
@@ -36,9 +41,12 @@ public class ProductController {
 
     }
     @ExceptionHandler(ProductNotFoundException.class)
-    public ErrorDTO handleProductNotFoundException(Exception e){
+    public ResponseEntity<ErrorDTO> handleProductNotFoundException(Exception e){
         ErrorDTO errorDTO = new ErrorDTO();
         errorDTO.setMessage(e.getMessage());
-        return errorDTO;
+        ResponseEntity<ErrorDTO> response = new ResponseEntity<>(
+                errorDTO, HttpStatus.NOT_FOUND
+        );
+        return response;
     }
 }
