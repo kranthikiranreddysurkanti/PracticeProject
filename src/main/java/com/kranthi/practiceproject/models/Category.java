@@ -13,4 +13,11 @@ import lombok.Setter;
 @Entity
 public class Category extends BaseModel{
     private String name;
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
