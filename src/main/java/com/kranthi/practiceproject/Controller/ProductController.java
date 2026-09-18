@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 public class ProductController {
 
@@ -34,13 +37,20 @@ public class ProductController {
         return response;
     }
     @PutMapping("/products")
-    public void updateProduct(Product p){
-
+    public void updateProduct(@RequestBody Product p){
+        productService.updateProduct(p.getId(), p.getTitle(), p.getDescription(), p.getPrice(), p.getImageUrl(), p.getCategory().getName());
     }
-    @DeleteMapping("/products")
-    public void deleteProduct(Long id){
-
+    @DeleteMapping("/products/{id}")
+    public void deleteProduct(@PathVariable Long id){
+        productService.deleteProduct(id);
     }
+
+    @GetMapping("/products")
+    public List<Product> getAllProducts(){
+        List<Product> p = productService.getAllProduct();
+        return p;
+    }
+
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<ErrorDTO> handleProductNotFoundException(Exception e){
         ErrorDTO errorDTO = new ErrorDTO();
